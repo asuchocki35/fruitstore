@@ -1,0 +1,9 @@
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mariadb-config
+data:
+  database-host: mariadb  # Hostname of the MariaDB service
+  database-port: "3306"   # Port for MariaDB
+  database-name: fruitstore

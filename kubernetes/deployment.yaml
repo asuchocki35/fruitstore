@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fruitstore-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fruitstore
+  template:
+    metadata:
+      labels:
+        app: fruitstore
+    spec:
+      containers:
+        - name: fruitstore-app
+          image: fruitstore:1.0
+          ports:
+            - containerPort: 5000
+          env:
+            - name: SQLALCHEMY_DATABASE_URI
+              value: mysql+pymysql://root:password@mariadb:3306/fruitstore
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fruitstore-service
+spec:
+  selector:
+    app: fruitstore
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: NodePort
